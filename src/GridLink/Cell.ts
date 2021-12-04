@@ -1,4 +1,6 @@
-class Cell
+import { Direction } from "../Types.js";
+import { LinkNode } from "./LinkNode.js";
+export class Cell
 {
     private _x:number;
     private _y:number;

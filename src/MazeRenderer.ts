@@ -1,4 +1,6 @@
-class MazeRenderer{
+import { Maze } from "./Maze.js";
+import { Cell } from "./GridLink/Cell.js";
+export class MazeRenderer{
     private _ctx:CanvasRenderingContext2D;
     constructor(ctx:CanvasRenderingContext2D){
         this._ctx = ctx;
@@ -12,13 +14,13 @@ class MazeRenderer{
         
         this._ctx.beginPath();
         this._ctx.moveTo(sX, sY);
-        if(cell.Down === undefined) this._ctx.lineTo(sX+size, sY);
+        if(cell.Up === undefined) this._ctx.lineTo(sX+size, sY);
         else this._ctx.moveTo(sX+size, sY);
     
         if(cell.Right === undefined) this._ctx.lineTo(sX+size, sY+size);
         else this._ctx.moveTo(sX+size, sY+size);
     
-        if(cell.Up === undefined) this._ctx.lineTo(sX, sY+size);
+        if(cell.Down === undefined) this._ctx.lineTo(sX, sY+size);
         else this._ctx.moveTo(sX, sY+size);
     
         if(cell.Left === undefined) this._ctx.lineTo(sX, sY);

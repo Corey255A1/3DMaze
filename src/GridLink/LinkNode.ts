@@ -1,4 +1,5 @@
-class LinkNode<T>
+import { ObjectList } from "../ObjectList.js";
+export class LinkNode<T>
 {
     private _max_count:number;
     private _used:number;
@@ -22,7 +23,7 @@ class LinkNode<T>
 
     public setLink(idx:number, value:T){
         if(idx < this._max_count){
-            if((this._links[idx] == value)){
+            if((this._links[idx] !== value)){
                 if(value !== null){
                     this._used += 1;
                     this._links[idx] = value;

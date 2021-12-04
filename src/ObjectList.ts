@@ -1,4 +1,4 @@
-class ObjectList<T>{
+export class ObjectList<T>{
     private _array:Array<T>
     constructor(){
         this._array = []

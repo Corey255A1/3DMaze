@@ -1,4 +1,6 @@
-class Grid{
+import { Cell } from "./Cell.js"
+import { Point2D } from "../Types.js";
+export class Grid{
     protected _width:number;
     protected _height:number;
     private _grid:Array<Array<Cell>>;
