@@ -1,0 +1,25 @@
+{
+  "name": "3dmaze",
+  "version": "1.0.0",
+  "description": "3D Maze",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Corey255A1/3DMaze.git"
+  },
+  "author": "wundervision",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Corey255A1/3DMaze/issues"
+  },
+  "homepage": "https://github.com/Corey255A1/3DMaze#readme",
+  "devDependencies": {
+    "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
