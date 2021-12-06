@@ -1,4 +1,4 @@
-import { ObjectList } from "../ObjectList.js";
+import { ObjectList } from "../ObjectList";
 export class LinkNode<T>
 {
     private _max_count:number;

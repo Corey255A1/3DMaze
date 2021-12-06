@@ -1,5 +1,5 @@
-import { Maze } from "./Maze.js";
-import { Cell } from "./GridLink/Cell.js";
+import { Maze } from "./Maze";
+import { Cell } from "./GridLink/Cell";
 export class MazeRenderer{
     private _ctx:CanvasRenderingContext2D;
     constructor(ctx:CanvasRenderingContext2D){

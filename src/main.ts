@@ -66,7 +66,7 @@ function main(){
             }
         }
         
-        ctx.fillRect(2+cellSize*currentCell.X,2+cellSize*currentCell.Y,cellSize*0.6,cellSize*0.6);
+        ctx.fillRect(3+cellSize*currentCell.X,3+cellSize*currentCell.Y,cellSize-6,cellSize-6);
         requestAnimationFrame(render);
     }
     requestAnimationFrame(render);

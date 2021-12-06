@@ -17,9 +17,13 @@
   },
   "homepage": "https://github.com/Corey255A1/3DMaze#readme",
   "devDependencies": {
-    "typescript": "^4.5.2"
+    "typescript": "^4.5.2",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "@babylonjs/core": "^4.2.0",
+    "express": "^4.17.1",
+    "ts-loader": "^9.2.6"
   }
 }

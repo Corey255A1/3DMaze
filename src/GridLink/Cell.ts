@@ -1,5 +1,5 @@
-import { Direction } from "../Types.js";
-import { LinkNode } from "./LinkNode.js";
+import { Direction } from "../Types";
+import { LinkNode } from "./LinkNode";
 export class Cell
 {
     private _x:number;

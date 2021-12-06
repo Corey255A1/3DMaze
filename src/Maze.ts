@@ -1,6 +1,6 @@
-import { Direction, Point2D } from "./Types.js";
-import { Grid } from "./GridLink/Grid.js";
-import { Cell } from "./GridLink/Cell.js";
+import { Direction, Point2D } from "./Types";
+import { Grid } from "./GridLink/Grid";
+import { Cell } from "./GridLink/Cell";
 export class Maze extends Grid{
     private _directionBias:number;
     constructor(width:number, height:number){

@@ -1,5 +1,5 @@
-import { Cell } from "./Cell.js"
-import { Point2D } from "../Types.js";
+import { Cell } from "./Cell"
+import { Point2D } from "../Types";
 export class Grid{
     protected _width:number;
     protected _height:number;
