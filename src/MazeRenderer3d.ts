@@ -21,7 +21,7 @@ import {
         this._size=5;
         this._size_half = this._size/2;
     }
-    DrawWalls(cell:Cell){
+    DrawWalls(cell:Cell):Mesh|null{
         let cells = []
         if(cell.Up == undefined){
             const up =  MeshBuilder.CreatePlane("plane", {size:this._size}, this._scene);
@@ -59,13 +59,21 @@ import {
           box.position.y += this._size_half;
           box.position.x = cell.X * this._size;
           box.position.z = cell.Y * this._size;
+          //box.checkCollisions = true;
         }
 
+        return box;
+
     }
-    DrawMaze(maze:Maze){
+    DrawMaze(maze:Maze):Array<Mesh>{
+        const walls:Array<Mesh> = [];
         for(let i=0; i<maze.CellCount; i++){
             const c = maze.getCell(i);
-            this.DrawWalls(c);
+            const w = this.DrawWalls(c);
+            if(w!=null){
+                walls.push(w);
+            }
         }
+        return walls;
     }
 }

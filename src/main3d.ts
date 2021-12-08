@@ -8,7 +8,9 @@ import {
     UniversalCamera,
     StandardMaterial,
     Color3,
-    MeshBuilder
+    MeshBuilder,
+    DirectionalLight,
+    SpotLight
  } from "@babylonjs/core";
 import { Generator } from "webpack";
  
@@ -36,7 +38,7 @@ function main(){
     // Attach the camera to the canvas
     camera.speed = 0.5;
     camera.applyGravity = true;
-    camera.ellipsoid = new Vector3(.4, .8, .4);
+    camera.ellipsoid = new Vector3(1, .8, 1);
     camera.checkCollisions = true;
     camera.attachControl(cnv, true);
 
@@ -45,6 +47,11 @@ function main(){
 
     // Default intensity is 1. Let's dim the light a small amount
     light.intensity = 0.7;
+
+    //figure out better lights ...
+    var spotlight = new SpotLight("spotlight", new Vector3(15,15,0), new Vector3(35,0,35), 0, 1, scene);
+    //var dirlight = new DirectionalLight("DirectionalLight", new Vector3(0, 0, 0), scene);
+    //dirlight.position = new Vector3(15,15,0);
 
     // Our built-in 'sphere' shape. Params: name, subdivs, size, scene
     //var sphere = MeshBuilder.CreateSphere("sphere1",{segments:16, diameter:2}, scene)
@@ -69,7 +76,10 @@ function main(){
     maze.Generate();
 
     const mazerender = new MazeRenderer3d(scene);
-    mazerender.DrawMaze(maze);
+    const mazepieces = mazerender.DrawMaze(maze);
+    
+    //const fullmaze = Mesh.MergeMeshes(mazepieces, true);
+    //if(fullmaze!=null) fullmaze.checkCollisions = true;
 
     // Render every frame
     engine.runRenderLoop(() => {
