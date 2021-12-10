@@ -1,20 +1,15 @@
 import { Maze } from "./Maze";
 import { MazeRenderer3d } from "./MazeRenderer3d";
-import { Direction } from "./Types";
-import { 
-    Engine, FreeCamera, 
-    Scene, Vector3,
-    HemisphericLight, Mesh,
-    UniversalCamera,
-    StandardMaterial,
-    Color3,
-    MeshBuilder,
-    DirectionalLight,
-    SpotLight
- } from "@babylonjs/core";
-import { Generator } from "webpack";
- 
-function main(){
+//import { Direction } from "./Types";
+
+import { Engine, WebXRExperienceHelper } from "@babylonjs/core";
+import { UniversalCamera } from "@babylonjs/core/Cameras";
+import { StandardMaterial } from "@babylonjs/core/Materials";
+import { Scene } from "@babylonjs/core/scene";
+import { MeshBuilder } from "@babylonjs/core/Meshes";
+import { HemisphericLight} from "@babylonjs/core/Lights";
+import { Vector3, Axis, Color3 } from "@babylonjs/core/Maths";
+async function main(){
     const cnv = document.getElementById("game") as HTMLCanvasElement;
     cnv.width = 1920;
     cnv.height = 1080;
@@ -22,6 +17,7 @@ function main(){
 
     let scene = new Scene(engine);
 
+   
     //float camera
     /*
     var camera = new FreeCamera("camera", new Vector3(25,20,25), scene);
@@ -38,7 +34,7 @@ function main(){
     // Attach the camera to the canvas
     camera.speed = 0.5;
     camera.applyGravity = true;
-    camera.ellipsoid = new Vector3(1, .8, 1);
+    camera.ellipsoid = new Vector3(1.2, 1, 1.2);
     camera.checkCollisions = true;
     camera.attachControl(cnv, true);
 
@@ -49,7 +45,7 @@ function main(){
     light.intensity = 0.7;
 
     //figure out better lights ...
-    var spotlight = new SpotLight("spotlight", new Vector3(15,15,0), new Vector3(35,0,35), 0, 1, scene);
+    //var spotlight = new SpotLight("spotlight", new Vector3(15,15,0), new Vector3(35,0,35), 0, 1, scene);
     //var dirlight = new DirectionalLight("DirectionalLight", new Vector3(0, 0, 0), scene);
     //dirlight.position = new Vector3(15,15,0);
 
@@ -69,6 +65,16 @@ function main(){
     ground.position.x += groundWidth/2-10;
     ground.position.z += groundHeight/2-10;
     ground.checkCollisions = true;
+
+    const xr = await scene.createDefaultXRExperienceAsync({
+        floorMeshes:[ground]
+    });
+
+    // try {
+    //     const xrHelper = await WebXRExperienceHelper.CreateAsync(scene);
+    // } catch (e) {
+    //     // no XR support
+    // }
 
     //camera.setTarget(ground.position);
 
