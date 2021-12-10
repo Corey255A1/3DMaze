@@ -9,6 +9,7 @@ import { Scene } from "@babylonjs/core/scene";
 import { MeshBuilder } from "@babylonjs/core/Meshes";
 import { HemisphericLight} from "@babylonjs/core/Lights";
 import { Vector3, Axis, Color3 } from "@babylonjs/core/Maths";
+import { Direction } from "./Types";
 async function main(){
     const cnv = document.getElementById("game") as HTMLCanvasElement;
     cnv.width = 1920;
@@ -26,16 +27,14 @@ async function main(){
     */
 
     // Parameters : name, position, scene
-    var camera = new UniversalCamera("UniversalCamera", new Vector3(1, 1, 1), scene);
-
-    // Targets the camera to a particular position. In this case the scene origin
-    camera.setTarget(Vector3.Zero());
+    var camera = new UniversalCamera("UniversalCamera", new Vector3(1, 1, 1), scene); 
 
     // Attach the camera to the canvas
     camera.speed = 0.5;
     camera.applyGravity = true;
     camera.ellipsoid = new Vector3(1.2, 1, 1.2);
     camera.checkCollisions = true;
+    camera.inputs.
     camera.attachControl(cnv, true);
 
     // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
@@ -79,10 +78,21 @@ async function main(){
     //camera.setTarget(ground.position);
 
     const maze = new Maze(10,10);
+    const start = maze.GetCellByXY(0,0);
+    if(start == undefined){
+        return;
+    }
     maze.Generate();
 
-    const mazerender = new MazeRenderer3d(scene);
-    const mazepieces = mazerender.DrawMaze(maze);
+    const mazerender = new MazeRenderer3d(maze, 5, scene);
+    const mazepieces = mazerender.GenerateMeshes();
+    
+    camera.position = mazerender.WorldPoint(start);
+
+    let lookat = mazerender.GetPointInDirection(start, start.ValidDirections[0]);
+
+    camera.setTarget(lookat);
+
     
     //const fullmaze = Mesh.MergeMeshes(mazepieces, true);
     //if(fullmaze!=null) fullmaze.checkCollisions = true;

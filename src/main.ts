@@ -25,7 +25,11 @@ function main(){
     maze.Generate();
     
     let direction = -1;
-    let currentCell = maze.getValueXY(0,0);
+    let currentCell = maze.GetCellByXY(0,0);
+    if(currentCell == undefined){
+        console.log("No Starting point found...");
+        return;
+    }
     const directions:{[key:string]:Direction} = {
         "ArrowRight":Direction.Right,
         "ArrowUp":Direction.Up,
@@ -46,28 +50,30 @@ function main(){
     
     let startTime = 0;
     function render(currentTime:number){
-        ctx.strokeStyle = "blue";
-        ctx.fillStyle = "limegreen";
-        ctx.lineWidth = 3;
-        mazeRender.DrawMaze(maze,cellSize);
-    
-        ctx.fillStyle = "black";
-        if(startTime === 0){
-            startTime = currentTime;
-        }
-        const elapsed = currentTime - startTime;
-        if(elapsed > 100){
-            startTime = currentTime;
-            if(direction!==-1){
-                let next = currentCell.getDirection(direction);
-                if(next !== undefined){
-                    currentCell = next;
+        if(currentCell != undefined){
+            ctx.strokeStyle = "blue";
+            ctx.fillStyle = "limegreen";
+            ctx.lineWidth = 3;
+            mazeRender.DrawMaze(maze,cellSize);
+        
+            ctx.fillStyle = "black";
+            if(startTime === 0){
+                startTime = currentTime;
+            }
+            const elapsed = currentTime - startTime;
+            if(elapsed > 100){
+                startTime = currentTime;
+                if(direction!==-1){
+                    let next = currentCell.GetDirection(direction);
+                    if(next != undefined){
+                        currentCell = next;
+                    }
                 }
             }
+            
+            ctx.fillRect(3+cellSize*currentCell.X,3+cellSize*currentCell.Y,cellSize-6,cellSize-6);
+            requestAnimationFrame(render);
         }
-        
-        ctx.fillRect(3+cellSize*currentCell.X,3+cellSize*currentCell.Y,cellSize-6,cellSize-6);
-        requestAnimationFrame(render);
     }
     requestAnimationFrame(render);
 }

@@ -2,6 +2,7 @@ import { Direction, Point2D } from "./Types";
 import { Grid } from "./GridLink/Grid";
 import { Cell } from "./GridLink/Cell";
 export class Maze extends Grid{
+    static WALL:Cell = new Cell(-1,-1);
     private _directionBias:number;
     constructor(width:number, height:number){
         super(width, height, (x,y)=>{return new Cell(x,y)});
@@ -33,7 +34,7 @@ export class Maze extends Grid{
         let v = this.directionToPoint2D(d);
         v.X += x;
         v.Y += y;
-        return this.getValue(v);
+        return this.GetCellByPoint(v);
     }
 
     public Generate(){
@@ -41,8 +42,8 @@ export class Maze extends Grid{
         const startY = 0;
         const endX = this._width-1;
         const endY = this._height-1;
-        let curCell = this.getValueXY(startX,startY);
-        if(curCell !== undefined){
+        let curCell = this.GetCellByXY(startX,startY);
+        if(curCell != undefined){
             let pathStack = [curCell];
             let direction = 0;
             let state = "FORWARD";
@@ -50,31 +51,29 @@ export class Maze extends Grid{
             while(state != "DONE" && x<75000){
                 switch(state){
                     case "FORWARD":{
-                        let potentialDirections = curCell.getRemainingDirections();
+                        let potentialDirections = curCell.GetRemainingDirections();
                         let directionIdxMax = potentialDirections.length-1;
                         if(directionIdxMax === -1){ 
-                            //console.log("BACKWARD"); 
-                            //console.log(pathStack);
                             state = "BACKWARD";
                             break; 
                         }
                         let directionIdx = Math.round(Math.random()*directionIdxMax);
                         direction = potentialDirections[directionIdx];
                         let next = this.nextCell(curCell.X, curCell.Y, direction);
-                        if(next!==undefined && next.State === 0){
-                            curCell.setDirection(direction, next);
-                            next.setOppositeDirection(direction, curCell);
+                        if(next!=undefined && next.State === 0){
+                            curCell.SetDirection(direction, next);
+                            next.SetOppositeDirection(direction, curCell);
                             curCell = next;
                             pathStack.push(curCell);
                             
                         }else{
-                            curCell.setDirection(direction, undefined);
+                            curCell.SetDirection(direction, Maze.WALL);
                         }
                     }break;
                     case "BACKWARD":{
                         if(pathStack.length>0){
                             let prev = pathStack.pop();
-                            if(prev.getRemainingDirectionCount()>0)
+                            if(prev != undefined && prev.GetRemainingDirectionCount()>0)
                             {
                                 curCell = prev;
                                 pathStack.push(prev);

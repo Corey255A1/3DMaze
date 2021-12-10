@@ -12,41 +12,42 @@ export class Cell
     }
     get X():number{return this._x;}
     get Y():number{return this._y;}
-    get Right():Cell{return this._links.getLink(Direction.Right);}
-    get Down():Cell{return this._links.getLink(Direction.Down);}
-    get Left():Cell{return this._links.getLink(Direction.Left);}
-    get Up():Cell{return this._links.getLink(Direction.Up);}
+    get Right():Cell{return this._links.GetLink(Direction.Right);}
+    get Down():Cell{return this._links.GetLink(Direction.Down);}
+    get Left():Cell{return this._links.GetLink(Direction.Left);}
+    get Up():Cell{return this._links.GetLink(Direction.Up);}
+    get Connections():Array<Cell>{return this._links.Links;}
 
-    setDirection(dir:Direction, cell:Cell){
-        this._links.setLink(dir, cell);
+    public SetDirection(dir:Direction, cell:Cell){
+        this._links.SetLink(dir, cell);
     }
 
-    setOppositeDirection(dir:Direction, cell:Cell){
-        this.setDirection((dir+2)%4, cell);
+    public SetOppositeDirection(dir:Direction, cell:Cell){
+        this.SetDirection((dir+2)%4, cell);
     }
 
-    clearDirection(dir:Direction){
-        this._links.clearLink(dir);
+    public ClearDirection(dir:Direction){
+        this._links.ClearLink(dir);
     }
     
-    getDirection(dir:Direction): Cell{
-        return this._links.getLink(dir);
+    public GetDirection(dir:Direction): Cell{
+        return this._links.GetLink(dir);
     }
 
-    getRemainingDirections(){
+    public GetRemainingDirections(){
         return this._links.RemainingLinkIndexList;
     }
 
-    getRemainingDirectionCount(){
+    public GetRemainingDirectionCount(){
         return this._links.RemainingLinks;
     }
 
-    get ActiveConnections():number{
-        let r = 0;
-        if(this.Right!==null && this.Right!==undefined) r|=1;
-        if(this.Down!==null && this.Down!==undefined) r|=2;
-        if(this.Left!==null && this.Left!==undefined) r|=4;
-        if(this.Up!==null && this.Up!==undefined) r|=8;
+    get ValidDirections():Array<Direction> {
+        let r = [];
+        if(this.Right!==null) r.push(Direction.Right);
+        if(this.Down!==null) r.push(Direction.Down);
+        if(this.Left!==null) r.push(Direction.Left);
+        if(this.Up!==null) r.push(Direction.Up);
         return r;
     }
 
@@ -59,8 +60,8 @@ export class Cell
         return r;
     }
 
-    toString():string{        
-        return ("0"+(this.ActiveConnections)).slice(-2);
+    public ToString():string{        
+        return ("0"+(this.State)).slice(-2);
     }
 
 }
